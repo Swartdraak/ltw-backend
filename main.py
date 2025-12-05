@@ -51,14 +51,18 @@ def send_contact_email(contact_data: ContactRequest):
     """Send contact form submission via Gmail SMTP"""
     try:
         print(f"[SMTP] Starting email send for {contact_data.name} ({contact_data.email})")
+
+        from_email = os.getenv('CONTACT_EMAIL')
+        to_email = os.getenv('CONTACT_EMAIL')
+        smtp_user = os.getenv('SMTP_USER')
         
         msg = MIMEMultipart('alternative')
         msg['Subject'] = f"New Contact Request from {contact_data.name}"
-        msg['From'] = os.getenv('SMTP_USER')
-        msg['To'] = os.getenv('CONTACT_EMAIL')
+        msg['From'] = from_email
+        msg['To'] = to_email
         msg['Reply-To'] = contact_data.email
         
-        print(f"[SMTP] Email headers set - From: {os.getenv('SMTP_USER')}, To: {os.getenv('CONTACT_EMAIL')}")
+        print(f"[SMTP] Email headers set - From: {from_email}, To: {to_email}")
         
         # Plain text version
         text = f"""
@@ -133,10 +137,10 @@ Submitted: {datetime.utcnow().isoformat()}
             print("[SMTP] Connected to SMTP server")
             server.starttls()
             print("[SMTP] STARTTLS completed")
-            server.login(os.getenv('SMTP_USER'), os.getenv('SMTP_PASSWORD'))
-            print(f"[SMTP] Logged in as {os.getenv('SMTP_USER')}")
+            server.login(smtp_user, os.getenv('SMTP_PASSWORD'))
+            print(f"[SMTP] Logged in as {smtp_user}")
             server.send_message(msg)
-            print(f"[SMTP] ✅ Email sent successfully to {os.getenv('CONTACT_EMAIL')}")
+            print(f"[SMTP] ✅ Email sent successfully to {to_email}")
     
     except smtplib.SMTPException as e:
         print(f"[SMTP] ❌ SMTP Error: {str(e)}")

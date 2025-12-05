@@ -68,11 +68,12 @@ Create a `.env` file in the root directory:
 FRONTEND_ORIGIN=http://localhost:3000
 
 # Gmail SMTP Configuration
+# SMTP_USER is the login (admin mailbox); CONTACT_EMAIL is the From/To address
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
+SMTP_USER=admin@luminaristechworks.ai
 SMTP_PASSWORD=your-app-password    # Gmail App Password (NOT account password)
-CONTACT_EMAIL=contact@yourdomain.com
+CONTACT_EMAIL=info@luminaristechworks.ai
 
 # Optional: Database (future)
 # DB_HOST=192.168.40.118
