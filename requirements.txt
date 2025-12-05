@@ -1,0 +1,5 @@
+fastapi
+pydantic[email]
+uvicorn[standard]
+python-dotenv
+slowapi
